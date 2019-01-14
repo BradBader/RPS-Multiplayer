@@ -38,7 +38,7 @@ p {
   left: 50%;
   bottom: 0;
   min-width: 40%;
-  min-height: 30%;
+  min-height: 100%;
   -webkit-transform: translate3d(0, 0, 0);
           transform: translate3d(0, 0, 0);
   -webkit-transform: translateX(-50%);
@@ -89,6 +89,10 @@ h6 {text-shadow: 1px 1px black;
   text-shadow: 1px 1px black
 }
 
+.wsdow {
+  text-shadow: 1px 1px white
+}
+
 .ctr { overflow: hidden}
 
 .whitefont {color: white;
@@ -103,5 +107,5 @@ text-shadow: 1px 1px black;}
 
 .center {align-content: center}
 
-
+.pd20 {padding-bottom: 80px}
 

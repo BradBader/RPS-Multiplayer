@@ -8,19 +8,22 @@
         <link href="Assets/CSS/materialize.css" type="text/css" rel="stylesheet" media="screen,projection" />
         <!-- My CSS pull -->
         <link href="Assets/CSS/style.css" type="text/css" rel="stylesheet" media="screen,projection" />
+        <!-- Firebase Reference -->
+        <script src="https://www.gstatic.com/firebasejs/4.12.0/firebase.js"></script>
+
     </head>
 
     <body>
         <div class="row center">
-            <h1>A friendly game of:</h1>
+            <h5>A friendly game of:</h5>
         </div>
         <div class="row">
             <div class="col l4 m4 s4">
                 <div class="parallax-container">
                     <div class="section no-pad-bot">
                         <div class="container">
-                           
-                            <h1 class="header center white-text text-darken-2">Rock</h1>
+
+                            <h2 class="header center wsdow text-darken-2">Rock</h2>
                         </div>
 
                     </div>
@@ -32,8 +35,8 @@
                 <div class="parallax-container">
                     <div class="section no-pad-bot">
                         <div class="container">
-                            
-                            <h1 class="header center white-text text-darken-2">Paper</h1>
+
+                            <h2 class="header center wsdow text-darken-2">Paper</h2>
                         </div>
 
                     </div>
@@ -46,8 +49,8 @@
                 <div class="parallax-container">
                     <div class="section no-pad-bot">
                         <div class="container">
-                            
-                            <h1 class="header center white-text text-darken-2">Scissors</h1>
+
+                            <h2 class="header center wsdow text-darken-2">Scissors</h2>
                         </div>
 
                     </div>
@@ -57,58 +60,82 @@
                 </div>
             </div>
         </div>
-        <div class="row center">
+        <!-- <div class="row center">
 
             <div class="col l12 s12 m12">
                 <div class="container">
                     <h4><span class="active-players"></span>Players Are Active</h4>
-                    <h4><span class="active-spectators"></span>Players Are Spectating</h4>
+                    <h4><span id="active-spectators"></span>Players Are Spectating</h4>
                 </div>
             </div>
-        </div>
+        </div> -->
         <div class="row">
-            <div class="col l2 m2 s2">
+            <div class="col l5 offset-l1 m5 s5">
+                <div class="container">
+                    <div class="row">
+                        <h3><span class="playerOne">Player 1: Enter Name</span></h3>
+                    </div>
+                    <div class="row" id="playerOneInfo">
+                        <form class="col l12 m12 s12">
+                            <div class="input-field col l8 m8 s8">
+                                <input placeholder="Placeholder" id="playerOneName" type="text" class="validate">
+                                <label for="playerOneName" id="oneText">Player One Name</label>
+                            </div>
+                        </form>
+                        <button id="playerOneSubmit" class="btn-small  waves-effect grey dark-1 waves-light" type="submit"
+                            name="action">Submit Name
+                            <i class="material-icons right">send</i>
+                        </button>
+                    </div>
+                    <div class="row" id="playerOneButtons">
+                        <button class="waves-effect waves-light grey playerOneBtn dark-1 btn-large" value="R"><i class="material-icons left">volume_up</i>Rock</button>
+                        <button class="waves-effect waves-light grey playerOneBtn dark-1 btn-large" value="P"><i class="material-icons left">message</i>Paper</button>
+                        <button class="waves-effect waves-light grey playerOneBtn dark-1 btn-large" value="S"><i class="material-icons left">content_cut</i>Scissors</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col l5 ofset-l1 m5 s5">
+                <div class="container">
+                    <div class="row">
+                        <h3><span class="playerTwo">Player 2: Enter Name</span></h3>
+                    </div>
+                    <div class="row" id="playerTwoInfo">
+                        <form class="col s12">
+                            <div class="input-field col s6">
+                                <input placeholder="Placeholder" id="playerTwoName" type="text" class="validate">
+                                <label for="playerTwoName" id="twoText">Player 2 Name</label>
+                            </div>
+                        </form>
+                        <button id="playerTwoSubmit" class="btn-small  waves-effect grey dark-1 waves-light" type="submit"
+                            name="action">Submit Name
+                            <i class="material-icons right">send</i>
+                        </button>
+                    </div>
+                    <div class="row" id="playerTwoButtons">
+                        <a class="waves-effect waves-light grey playerTwoBtn dark-1 btn-large" value="R"><i class="material-icons left">volume_up</i>Rock</a>
+                        <a class="waves-effect waves-light grey playerTwoBtn dark-1 btn-large" value="P"><i class="material-icons left">message</i>Paper</a>
+                        <a class="waves-effect waves-light grey playerTwoBtn dark-1 btn-large" value="S"><i class="material-icons left">content_cut</i>Scissors</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row center">
 
-            </div>
-            <div class="col l5 m5 s5">
-                <div class="container">
-                    <div class="row"><h3>Player 1: <span class="one-chosen"></span></h3></div>
-                    <div class="row">
-                            <a class="waves-effect waves-light grey dark-1 btn-small" value="R"><i class="material-icons left">volume_up</i>Rock</a>
-                            <a class="waves-effect waves-light grey dark-1 btn-small" value="P"><i class="material-icons left">message</i>Paper</a>
-                            <a class="waves-effect waves-light grey dark-1 btn-small" value="S"><i class="material-icons left">content_cut</i>Scissors</a>
+            <div class="col s6 offset-s3 m6 offset-m3 l6 offset-l3">
+                <div class="card white pd20">
+                    <div class="card-content">
+                        <span class="chat-text">Chat box</span>
                     </div>
-                </div>
-            </div>
-            <div class="col l5 m5 s5">
-                <div class="container">
-                    <div class="row"><h3>Player 2: <span class="two-chosen"></span></h3></div>
-                    <div class="row">
-                            <a class="waves-effect waves-light grey dark-1 btn-small" value="R"><i class="material-icons left">volume_up</i>Rock</a>
-                            <a class="waves-effect waves-light grey dark-1 btn-small" value="P"><i class="material-icons left">message</i>Paper</a>
-                            <a class="waves-effect waves-light grey dark-1 btn-small" value="S"><i class="material-icons left">content_cut</i>Scissors</a>
+                    <div class="card-action">
+                            <div class="input-field col s6 m6 l6">
+                                    <input placeholder="Enter Thy Taunt Here" id="message-input" type="text" class="validate">
+                                    <label for="chatText" id="misc-input"></label>
+                                </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="row center">
-            <h1>Misc text for formatting</h1>
-        </div>
-        <div class="row center">
-            <h1>Misc text for formatting</h1>
-        </div>
-        <div class="row center">
-            <h1>Misc text for formatting</h1>
-        </div>
-        <div class="row center">
-            <h1>Misc text for formatting</h1>
-        </div>
-        <div class="row center">
-            <h1>Misc text for formatting</h1>
-        </div>
-        <div class="row center">
-            <h1>Misc text for formatting</h1>
-        </div>
+
 
         <!-- Jquery library pull -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
