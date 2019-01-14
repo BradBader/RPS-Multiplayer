@@ -16,7 +16,7 @@ var playerTwoChoice
 var playerTwoChosen = false;
 var playerOneActive = false;
 var playerTwoActive = false;
-var spectators=0;
+var spectators = 0;
 
 var chatObject = {
     "1": {
@@ -32,16 +32,16 @@ var time = new Date().toLocaleTimeString();
 var counter = 1;
 
 $("#send").click(function () {
-    var message= $("#message-input").val();
+    var message = $("#message-input").val();
     var time = new Date().toLocaleTimeString();
     $("#message-input").val("");
 
-    chatObject ['newMessage' + counter] = {
+    chatObject['newMessage' + counter] = {
         message: message,
         time: time,
         username: curUser,
     };
-    counter ++;
+    counter++;
 
     // updateUI(chatObject);
 
@@ -49,25 +49,26 @@ $("#send").click(function () {
 });
 
 // on database root/1/Name value change, runs this function
-    // takes a snapshot of the value change, logs to console
-    // sets realPlayerOneName variable to that new snapshot value
-    // replaces div class playerOne text with realPlayerOne value
-    // if that value is not null, proceeds to hide the previous input field.
-database.ref("/1/Name").on("value", function(snapshot) {
+// takes a snapshot of the value change, logs to console
+// sets realPlayerOneName variable to that new snapshot value
+// replaces div class playerOne text with realPlayerOne value
+// if that value is not null, proceeds to hide the previous input field.
+database.ref("/1/Name").on("value", function (snapshot) {
     console.log(snapshot.val());
     realPlayerOneName = (snapshot.val());
-    $(".playerOne").text(realPlayerOneName);
     if (realPlayerOneName !== null) {
+        $(".playerOne").text(realPlayerOneName);
         $("#playerOneInfo").hide();
     }
 
 })
 
-database.ref("/2/Name").on("value", function(snapshot) {
+database.ref("/2/Name").on("value", function (snapshot) {
     console.log(snapshot.val());
     realPlayerTwoName = (snapshot.val());
-    $(".playerTwo").text(realPlayerTwoName);
+
     if (realPlayerTwoName !== null) {
+        $(".playerTwo").text(realPlayerTwoName);
         $("#playerTwoInfo").hide();
     }
 })
@@ -87,7 +88,8 @@ $(".playerOneBtn").on("click", function () {
         database.ref("/1").set({
             choice: playerOneChoice
         });
-    }});
+    }
+});
 
 $(".playerTwoBtn").on("click", function () {
     if (playerTwoChosen == false) {
@@ -130,7 +132,7 @@ connectionsRef.on("value", function (snapshot) {
     // Display the viewer count in the html.
     // The number of online users is the number of children in the connections list.
     $("#active-spectators").text(snapshot.numChildren() + " ");
-    spectators=(snapshot.numChildren());
+    spectators = (snapshot.numChildren());
 
 });
 
