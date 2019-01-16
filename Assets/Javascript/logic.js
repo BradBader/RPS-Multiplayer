@@ -113,6 +113,7 @@ function versus() {
 
 function dbOneLosses() {
     playerOneLosses++;
+    console.log(playerOneLosses)
     database.ref("/1/Losses").set({
         Losses: playerOneLosses
     })
@@ -121,10 +122,10 @@ function dbOneLosses() {
 
 function dbOneWins() {
     playerOneWins++;
+    console.log(playerOneWins)
     database.ref("/1/Wins").set({
         Wins: playerOneWins
     })
-    $(".oneWins").text()
 
 }
 
@@ -267,32 +268,24 @@ database.ref("/2/Choice/Choice").on("value", function (snapshot) {
 });
 database.ref("/2/Wins/Wins").on("value", function (snapshot) {
     realPlayerTwoWins = (snapshot.val());
-    versus();
-    hideTwoButtons();
     if (realPlayerTwoWins >= 1) {
     $(".twoWins").text(realPlayerTwoName + " Wins: " + realPlayerTwoWins)
     }
 });
 database.ref("/2/Losses/Losses").on("value", function (snapshot) {
     realPlayerTwoLosses= (snapshot.val());
-    versus();
-    hideTwoButtons();
     if (realPlayerTwoLosses >= 1) {
-    $(".twoLosses").text(realPlayerTwoLosses + " Losses: " + realPlayerTwoLosses)
+    $(".twoLosses").text(realPlayerTwoName + " Losses: " + realPlayerTwoLosses)
     }
 });
 database.ref("/1/Wins/Wins").on("value", function (snapshot) {
     realPlayerOneWins = (snapshot.val());
-    versus();
-    hideTwoButtons();
     if (realPlayerOneWins >= 1) {
     $(".oneWins").text(realPlayerOneName + " Wins: " + realPlayerOneWins)
     }
 });
 database.ref("/1/Losses/Losses").on("value", function (snapshot) {
     realPlayerOneLosses= (snapshot.val());
-    versus();
-    hideTwoButtons();
     if (realPlayerOneLosses >= 1) {
     $(".oneLosses").text(realPlayerOneName + " Losses: " + realPlayerOneLosses)
     }
