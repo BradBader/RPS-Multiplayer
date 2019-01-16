@@ -88,21 +88,24 @@
                         </button>
                     </div>
                     <div class="row" id="playerOneButtons">
-                        <button class="waves-effect waves-light grey playerOneBtn playerOneBtnR rockOne dark-1 btn-large" value="R"><i class="material-icons left">volume_up</i>Rock</button>
-                        <button class="waves-effect waves-light grey playerOneBtn playerOneBtnP paperOne dark-1 btn-large" value="P"><i class="material-icons left">message</i>Paper</button>
-                        <button class="waves-effect waves-light grey playerOneBtn playerOneBtnS scissorsOne dark-1 btn-large" value="S"><i class="material-icons left">content_cut</i>Scissors</button>
+                        <button class="waves-effect waves-light grey playerOneBtn playerOneBtnR rockOne dark-1 btn-large"
+                            value="R"><i class="material-icons left">volume_up</i>Rock</button>
+                        <button class="waves-effect waves-light grey playerOneBtn playerOneBtnP paperOne dark-1 btn-large"
+                            value="P"><i class="material-icons left">message</i>Paper</button>
+                        <button class="waves-effect waves-light grey playerOneBtn playerOneBtnS scissorsOne dark-1 btn-large"
+                            value="S"><i class="material-icons left">content_cut</i>Scissors</button>
 
                     </div>
                     <div class="row" id="playerOneLogoutRow">
-                            <div class="col s6 offset-s3 m6 offset-m3 l6 offset-l3">
-                                    <button id="playerOneLogoutButton" class="waves-effect waves-light grey dark-1 logout btn-small">Logout</button>
-                            </div>
+                        <div class="col s6 offset-s3 m6 offset-m3 l6 offset-l3">
+                            <button id="playerOneLogoutButton" class="waves-effect waves-light grey dark-1 logout btn-small">Logout</button>
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="col s2 m2 l2">
-                    <div class="card grey darken-1">
-                      <div class="card-content white-text">
+                <div class="card grey darken-1">
+                    <div class="card-content white-text">
                         <span class="card-title center">RESULTS</span>
                         <span class="tieGame center"></span><br>
                         <span class="oneWins center"></span><br>
@@ -110,9 +113,9 @@
                         <span class="twoWins center"></span><br>
                         <span class="twoLosses center"></span><br>
 
-                      </div>
                     </div>
-                  </div>
+                </div>
+            </div>
             <div class="col l5 m5 s5">
                 <div class="container">
                     <div class="row">
@@ -131,14 +134,17 @@
                         </button>
                     </div>
                     <div class="row" id="playerTwoButtons">
-                        <button class="waves-effect waves-light grey playerTwoBtn playerTwoBtnR dark-1 btn-large" value="R"><i class="material-icons left">volume_up</i>Rock</button>
-                        <button class="waves-effect waves-light grey playerTwoBtn playerTwoBtnP dark-1 btn-large" value="P"><i class="material-icons left">message</i>Paper</button>
-                        <button class="waves-effect waves-light grey playerTwoBtn playerTwoBtnS dark-1 btn-large" value="S"><i class="material-icons left">content_cut</i>Scissors</button>
+                        <button class="waves-effect waves-light grey playerTwoBtn playerTwoBtnR dark-1 btn-large" value="R"><i
+                                class="material-icons left">volume_up</i>Rock</button>
+                        <button class="waves-effect waves-light grey playerTwoBtn playerTwoBtnP dark-1 btn-large" value="P"><i
+                                class="material-icons left">message</i>Paper</button>
+                        <button class="waves-effect waves-light grey playerTwoBtn playerTwoBtnS dark-1 btn-large" value="S"><i
+                                class="material-icons left">content_cut</i>Scissors</button>
                     </div>
                     <div class="row" id="playerTwoLogoutRow">
-                            <div class="col s6 offset-s3 m6 offset-m3 l6 offset-l3">
-                                    <button id="playerTwoLogoutButton" class="waves-effect waves-light grey dark-1 logout btn-small">Logout</button>
-                            </div>
+                        <div class="col s6 offset-s3 m6 offset-m3 l6 offset-l3">
+                            <button id="playerTwoLogoutButton" class="waves-effect waves-light grey dark-1 logout btn-small">Logout</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -149,12 +155,18 @@
                 <div class="card white pd20">
                     <div class="card-content">
                         <span class="chat-text">Chat box</span>
+                        <div class="fullChatText"></div>
                     </div>
                     <div class="card-action">
-                            <div class="input-field col s6 m6 l6">
-                                    <input placeholder="Enter Thy Taunt Here" id="message-input" type="text" class="validate">
-                                    <label for="chatText" id="misc-input"></label>
-                                </div>
+                        <div class="input-field col s6 m6 l6">
+                            <input placeholder="Enter Thy Taunt Here" id="message-input" type="text" class="validate">
+                            <label for="chatText" id="misc-input"></label>
+                        </div>
+                        <div class="col s6 m6 l6">
+                            <button class="btn waves-effect waves-light grey light-1" type="submit" id="send" name="action">Send
+                                <i class="material-icons right">send</i>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>

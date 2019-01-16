@@ -38,20 +38,22 @@ var time = new Date().toLocaleTimeString();
 // updateUI(chatObject);
 
 
-// $("#send").on("click", function () {
-//     var message = $("#message-input").val();
-//     var time = new Date().toLocaleTimeString();
-//     $("#message-input").val("");
+$("#send").on("click", function () {
+    if (curUser != "") {
+        var message = $("#message-input").val();
+        var time = new Date().toLocaleTimeString();
+        $("#message-input").val("");
+        chatObject['newMessage'] = {
+            message: message,
+            time: time,
+            username: curUser,
+        };
+        console.log(chatObject)
+        // counter++;
 
-//     chatObject['newMessage' + counter] = {
-//         message: message,
-//         time: time,
-//         username: curUser,
-//     };
-//     counter++;
-
-//     return false;
-// });
+        return false;
+    }
+});
 
 function preVersus() {
     if (playerOneChoice !== null && playerTwoChoice !== null) {
@@ -142,7 +144,7 @@ function dbTwoWins() {
     database.ref("/2/Wins").set({
         Wins: playerTwoWins
     })
-;
+        ;
 }
 
 function clearChoices() {
@@ -269,25 +271,25 @@ database.ref("/2/Choice/Choice").on("value", function (snapshot) {
 database.ref("/2/Wins/Wins").on("value", function (snapshot) {
     realPlayerTwoWins = (snapshot.val());
     if (realPlayerTwoWins >= 1) {
-    $(".twoWins").text(realPlayerTwoName + " Wins: " + realPlayerTwoWins)
+        $(".twoWins").text(realPlayerTwoName + " Wins: " + realPlayerTwoWins)
     }
 });
 database.ref("/2/Losses/Losses").on("value", function (snapshot) {
-    realPlayerTwoLosses= (snapshot.val());
+    realPlayerTwoLosses = (snapshot.val());
     if (realPlayerTwoLosses >= 1) {
-    $(".twoLosses").text(realPlayerTwoName + " Losses: " + realPlayerTwoLosses)
+        $(".twoLosses").text(realPlayerTwoName + " Losses: " + realPlayerTwoLosses)
     }
 });
 database.ref("/1/Wins/Wins").on("value", function (snapshot) {
     realPlayerOneWins = (snapshot.val());
     if (realPlayerOneWins >= 1) {
-    $(".oneWins").text(realPlayerOneName + " Wins: " + realPlayerOneWins)
+        $(".oneWins").text(realPlayerOneName + " Wins: " + realPlayerOneWins)
     }
 });
 database.ref("/1/Losses/Losses").on("value", function (snapshot) {
-    realPlayerOneLosses= (snapshot.val());
+    realPlayerOneLosses = (snapshot.val());
     if (realPlayerOneLosses >= 1) {
-    $(".oneLosses").text(realPlayerOneName + " Losses: " + realPlayerOneLosses)
+        $(".oneLosses").text(realPlayerOneName + " Losses: " + realPlayerOneLosses)
     }
 });
 
