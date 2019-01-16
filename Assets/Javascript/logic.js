@@ -23,6 +23,8 @@ var Wins;
 var curUser;
 var connected;
 var nullPlaceHolder = null;
+var realPlayerOneName;
+var realPlayerTwoName;
 
 var chatObject = {
     "1": {
@@ -185,7 +187,11 @@ function hideTwoButtons() {
 database.ref("/1/User/username").on("value", function (snapshot) {
 
     realPlayerOneName = (snapshot.val());
-    logOutOneShow();
+    if (realPlayerOneName == curUser) {
+        logOutOneShow();
+        $("#playerTwoLogoutRow").hide();
+        $("#playerOneButtons").show();
+    }
     if (realPlayerOneName !== null) {
         $(".playerOne").text(realPlayerOneName);
         $("#playerOneInfo").hide();
@@ -199,6 +205,12 @@ database.ref("/1/User/username").on("value", function (snapshot) {
         $(".playerOne").text("Player 1: Enter Name");
         $("#playerOneInfo").show();
     }
+    if (realPlayerOneName == curUser) {
+        $("#playerTwoLogoutRow").hide();
+    }
+    if (realPlayerTwoName == curUser) {
+        $("#playerOneLogoutRow").hide();
+    }
 })
 
 database.ref("/1/Choice/Choice").on("value", function (snapshot) {
@@ -211,7 +223,11 @@ database.ref("/1/Choice/Choice").on("value", function (snapshot) {
 database.ref("/2/User/username").on("value", function (snapshot) {
 
     realPlayerTwoName = (snapshot.val());
-    logOutTwoShow();
+    if (realPlayerTwoName == curUser) {
+        logOutTwoShow();
+        $("#playerOneLogoutRow").hide();
+        $("#playerTwoButtons").show();
+    };
 
     if (realPlayerTwoName !== null) {
         $(".playerTwo").text(realPlayerTwoName);
@@ -298,8 +314,20 @@ connectionsRef.on("value", function (snap) {
         database.ref("/1/User").set({
             username: nullPlaceHolder
         });
+        database.ref("/2/User").set({
+            username: nullPlaceHolder
+        });
+        $(".playerTwo").text("Player 2: Enter Name");
+        $("#playerTwoInfo").show();
         $(".playerOne").text("Player 1: Enter Name");
         $("#playerOneInfo").show();
+    }
+    if (connected >= 3 && curUser == null) {
+        logOutHide();
+        hideOneButtons();
+        hideTwoButtons();
+        $("#playerOneButtons").hide();
+        $("#playerTwoButtons").hide();
     }
     /////////////////*******/////////   I have tried numerous options to delete the all users on the first connection being formed, to no avail.  I haven't had success, other than deleting both users. */
 
@@ -333,7 +361,7 @@ function logOutHide() {
 
 }
 function logOutOneShow() {
-    $("playerOneLogoutRow").show();
+    $("#playerOneLogoutRow").show();
 }
 function logOutTwoShow() {
     $("#playerTwoLogoutRow").show();
@@ -371,7 +399,7 @@ $(document).ready(function () {
                 username: playerOneName
             })
         }
-    
+
     })
 
     $("#playerTwoSubmit").on("click", function (event) {
@@ -386,7 +414,7 @@ $(document).ready(function () {
                 username: playerTwoName
             })
         }
-        
+
 
     })
 }
