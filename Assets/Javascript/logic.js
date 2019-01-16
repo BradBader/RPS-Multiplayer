@@ -1,3 +1,6 @@
+// at this time Chat is still a WIP
+// known bug -- takes two first user page loads to null all user / wins data.
+
 var config = {
     apiKey: "AIzaSyD9UtNpjzF_CX2CQ599HFEX1pW-nxj8hHs",
     authDomain: "this-new-project-87b4a.firebaseapp.com",
@@ -25,35 +28,59 @@ var connected;
 var nullPlaceHolder = null;
 var realPlayerOneName;
 var realPlayerTwoName;
-
-var chatObject = {
-    "1": {
-        "message": "Hello how are you?",
-        "time": "8:49AM!",
-        "username": ""
-    }
-};
+var counter;
+var chatroom;
+var position;
+var newMessage;
+var chatroom = firebase.database().ref("/rpsChatroom")
+// var chatObject = {
+//     "1": {
+//         "message": "Hello how are you?",
+//         "time": "8:49AM!",
+//         "username": ""
+//     }
+// };
 
 var time = new Date().toLocaleTimeString();
-// updateUI(chatObject);
 
 
 $("#send").on("click", function () {
-    if (curUser != "") {
-        var message = $("#message-input").val();
-        var time = new Date().toLocaleTimeString();
-        $("#message-input").val("");
-        chatObject['newMessage'] = {
-            message: message,
-            time: time,
-            username: curUser,
-        };
-        console.log(chatObject)
-        // counter++;
-
-        return false;
-    }
+    message = $("#message-input").val();
+    console.log(message);
+    chatroom.push({
+        username: curUser,
+        message: message,
+        time: time,
+        
+    })
+    $(".messages-box").append(message)
+    $("#message-input").val("");
+    // if (curUser = realPlayerOneName) {
+    //     var message = $("#message-input").val();
+    //     var time = new Date().toLocaleTimeString();
+    //     $("#message-input").val("");
+    //     chatObject['newMessage' + counter] = {
+    //         message: message,
+    //         time: time,
+    //         username: curUser,
+    //     };
+    //     console.log(chatObject)
+    //     counter++;
+    //     updateUI(chatObject)
+    //     return false;
+    // }
 });
+
+var chatroom = firebase.database().ref("/rpsChatroom")
+
+chatroom.on("value", function (snapshot) {
+    console.log(snapshot.val())
+    // $(".messages-box").append(message)
+    // $(".messages > ul").append($(("<li class='li" + position + "'><span class='messages'")))
+    // $(".messages").animate({ scrollTop: $(this)[0].scrollHeight }, 1000);
+})
+
+
 
 function preVersus() {
     if (playerOneChoice !== null && playerTwoChoice !== null) {
