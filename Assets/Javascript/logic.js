@@ -61,33 +61,51 @@ function preVersus() {
 
 function versus() {
     if (playerOneChoice == "R" && playerTwoChoice == "R") {
+        $(".tieGame").text("Player One Chose " + playerOneChoice + " and Player 2 Chose " + playerTwoChoice + "! This game is a tie!")
         clearChoices()
         resetButtons()
     } else if (playerOneChoice == "R" && playerTwoChoice == "P") {
+        $(".tieGame").text(realPlayerOneName + " Chose " + playerOneChoice + " and " + realPlayerTwoName + " Chose " + playerTwoChoice + "! " + realPlayerTwoName + "wins!")
         dbOneLosses()
         dbTwoWins()
+        clearChoices()
+        resetButtons()
     } else if (playerOneChoice == "R" && playerTwoChoice == "S") {
-        //insert text function
+        $(".tieGame").text(realPlayerOneName + " Chose " + playerOneChoice + " and " + realPlayerTwoName + " Chose " + playerTwoChoice + "! " + realPlayerOneName + "wins!")
         dbOneWins();
         dbTwoLosses();
+        clearChoices()
+        resetButtons()
     } else if (playerOneChoice == "P" && playerTwoChoice == "R") {
+        $(".tieGame").text(realPlayerOneName + " Chose " + playerOneChoice + " and " + realPlayerTwoName + " Chose " + playerTwoChoice + "! " + realPlayerOneName + "wins!")
         dbOneLosses();
         dbTwoWins();
+        clearChoices()
+        resetButtons()
     } else if (playerOneChoice == "P" && playerTwoChoice == "P") {
-        // text re tie game
+        $(".tieGame").text("Player One Chose " + playerOneChoice + " and Player 2 Chose " + playerTwoChoice + "! This game is a tie!")
         clearChoices()
         resetButtons()
     } else if (playerOneChoice == "P" && playerTwoChoice == "S") {
+        $(".tieGame").text(realPlayerOneName + " Chose " + playerOneChoice + " and " + realPlayerTwoName + " Chose " + playerTwoChoice + "! " + realPlayerTwoName + "wins!")
         dbOneLosses();
         dbTwoWins();
+        clearChoices()
+        resetButtons()
     } else if (playerOneChoice == "S" && playerTwoChoice == "R") {
+        $(".tieGame").text(realPlayerOneName + " Chose " + playerOneChoice + " and " + realPlayerTwoName + " Chose " + playerTwoChoice + "! " + realPlayerTwoName + "wins!")
         dbOneLosses();
         dbTwoWins();
+        clearChoices()
+        resetButtons()
     } else if (playerOneChoice == "S" && playerTwoChoice == "P") {
+        $(".tieGame").text(realPlayerOneName + " Chose " + playerOneChoice + " and " + realPlayerTwoName + " Chose " + playerTwoChoice + "! " + realPlayerOneName + "wins!")
         dbOneWins();
         dbTwoLosses();
+        clearChoices()
+        resetButtons()
     } else if (playerOneChoice == "S" && playerTwoChoice == "S") {
-        // text re tie game
+        $(".tieGame").text("Player One Chose " + playerOneChoice + " and Player 2 Chose " + playerTwoChoice + "! This game is a tie!")
         clearChoices()
         resetButtons()
     }
@@ -98,8 +116,7 @@ function dbOneLosses() {
     database.ref("/1/Losses").set({
         Losses: playerOneLosses
     })
-    clearChoices();
-    resetButtons();
+
 }
 
 function dbOneWins() {
@@ -107,8 +124,8 @@ function dbOneWins() {
     database.ref("/1/Wins").set({
         Wins: playerOneWins
     })
-    clearChoices();
-    resetButtons();
+    $(".oneWins").text()
+
 }
 
 function dbTwoLosses() {
@@ -116,8 +133,7 @@ function dbTwoLosses() {
     database.ref("/2/Losses").set({
         Losses: playerTwoLosses
     })
-    clearChoices();
-    resetButtons();
+
 }
 
 function dbTwoWins() {
@@ -125,8 +141,7 @@ function dbTwoWins() {
     database.ref("/2/Wins").set({
         Wins: playerTwoWins
     })
-    clearChoices();
-    resetButtons();
+;
 }
 
 function clearChoices() {
@@ -150,7 +165,7 @@ function resetButtons() {
     }
 }
 
-//when called, hides the buttons playerOne did not pick. -- eventually will show only on player 1 side.
+//when called, hides the buttons playerOne did not pick. 
 function hideOneButtons() {
     if (playerOneChoice == "R") {
         $(".playerOneBtnP").hide()
@@ -165,7 +180,7 @@ function hideOneButtons() {
 
 }
 
-//when called, hides the buttons playerTwo did not pick. -- eventually will show only on player 2 side.
+//when called, hides the buttons playerTwo did not pick.
 function hideTwoButtons() {
     if (playerTwoChoice == "R") {
         $(".playerTwoBtnP").hide()
@@ -250,6 +265,40 @@ database.ref("/2/Choice/Choice").on("value", function (snapshot) {
     hideTwoButtons();
 
 });
+database.ref("/2/Wins/Wins").on("value", function (snapshot) {
+    realPlayerTwoWins = (snapshot.val());
+    versus();
+    hideTwoButtons();
+    if (realPlayerTwoWins >= 1) {
+    $(".twoWins").text(realPlayerTwoName + " Wins: " + realPlayerTwoWins)
+    }
+});
+database.ref("/2/Losses/Losses").on("value", function (snapshot) {
+    realPlayerTwoLosses= (snapshot.val());
+    versus();
+    hideTwoButtons();
+    if (realPlayerTwoLosses >= 1) {
+    $(".twoLosses").text(realPlayerTwoLosses + " Losses: " + realPlayerTwoLosses)
+    }
+});
+database.ref("/1/Wins/Wins").on("value", function (snapshot) {
+    realPlayerOneWins = (snapshot.val());
+    versus();
+    hideTwoButtons();
+    if (realPlayerOneWins >= 1) {
+    $(".oneWins").text(realPlayerOneName + " Wins: " + realPlayerOneWins)
+    }
+});
+database.ref("/1/Losses/Losses").on("value", function (snapshot) {
+    realPlayerOneLosses= (snapshot.val());
+    versus();
+    hideTwoButtons();
+    if (realPlayerOneLosses >= 1) {
+    $(".oneLosses").text(realPlayerOneName + " Losses: " + realPlayerOneLosses)
+    }
+});
+
+
 
 
 // Functions
@@ -314,9 +363,22 @@ connectionsRef.on("value", function (snap) {
         database.ref("/1/User").set({
             username: nullPlaceHolder
         });
+        database.ref("/1/Wins").set({
+            Wins: nullPlaceHolder
+        });
+        database.ref("/1/Losses").set({
+            Losses: nullPlaceHolder
+        });
         database.ref("/2/User").set({
             username: nullPlaceHolder
         });
+        database.ref("/2/Wins").set({
+            Wins: nullPlaceHolder
+        });
+        database.ref("/2/Losses").set({
+            Losses: nullPlaceHolder
+        });
+
         $(".playerTwo").text("Player 2: Enter Name");
         $("#playerTwoInfo").show();
         $(".playerOne").text("Player 1: Enter Name");
@@ -329,31 +391,7 @@ connectionsRef.on("value", function (snap) {
         $("#playerOneButtons").hide();
         $("#playerTwoButtons").hide();
     }
-    /////////////////*******/////////   I have tried numerous options to delete the all users on the first connection being formed, to no avail.  I haven't had success, other than deleting both users. */
-
-    // console.log(connected)
-    // if ((connected+1) == 3) {
-    //     database.ref("/2/User").set({
-    //         username: nullPlaceHolder
-    //     });
-    //     console.log("user 2 disconnected");
-    //     $(".playerTwo").text("Player 2: Enter Name");
-    //     $("#playerTwoInfo").show();
-    // }
-    // if (connected == 1) {
-    //     database.ref("/1/User").set({
-    //         username: nullPlaceHolder
-    //     });
-    //     $(".playerOne").text("Player 1: Enter Name");
-    //     $("#playerOneInfo").show();
-    // }
-
 });
-
-
-
-// -------------------------------------------------------------- (CRITICAL - BLOCK) --------------------------- //
-
 
 function logOutHide() {
     $("#playerTwoLogoutRow").hide();
@@ -369,7 +407,14 @@ function logOutTwoShow() {
 
 $(document).ready(function () {
     clearChoices();
+    if (playerOneWins === 0 && playerTwoWins === 0) {
+        // $(".oneWins").text("");
+        // $(".oneLosses").text("");
+        // $(".twoWins").text("");
+        // $(".twoLosses").text("");
+        // $(".tieGame").text("");
 
+    }
     // $(".logout").on("click", function (event) {
     //     if (curUser == realPlayerOneName) {
     //         database.ref("/1/User").set({
