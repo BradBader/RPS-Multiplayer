@@ -250,7 +250,7 @@ database.ref("/2/User/username").on("value", function (snapshot) {
     if (realPlayerTwoName !== null) {
         $(".playerTwo").text(realPlayerTwoName);
         $("#playerTwoInfo").hide();
-        $("#playerOneInfo").hide();
+
     }
     if (realPlayerTwoName !== null && realPlayerTwoName == curUser) {
         $("#playerOneInfo").hide();
@@ -292,13 +292,6 @@ database.ref("/1/Losses/Losses").on("value", function (snapshot) {
         $(".oneLosses").text(realPlayerOneName + " Losses: " + realPlayerOneLosses)
     }
 });
-
-
-
-
-// Functions
-// ================================================================================
-
 $(".playerOneBtn").on("click", function () {
     if (playerOneChosen == false) {
         playerOneChosen = true;
@@ -319,14 +312,9 @@ $(".playerTwoBtn").on("click", function () {
     }
 });
 
-// connections counter and code from codersbay activity //
-// connectionsRef references a specific location in our database.
 // All of our connections will be stored in this directory.
 var connectionsRef = database.ref("/connections");
 
-// '.info/connected' is a special location provided by Firebase that is updated every time
-// the client's connection state changes.
-// '.info/connected' is a boolean value, true if the client is connected and false if they are not.
 var connectedRef = database.ref(".info/connected");
 
 // When the client's connection state changes...
@@ -353,7 +341,7 @@ connectionsRef.on("value", function (snap) {
         $(".playerTwo").text("Player 2: Enter Name");
         $("#playerTwoInfo").show();
     }
-    if (connected == 1 && curUser == null) {
+    if (connected <= 1 && curUser == null) {
         console.log("300 triggered")
         database.ref("/1/User").set({
             username: nullPlaceHolder
@@ -403,11 +391,6 @@ function logOutTwoShow() {
 $(document).ready(function () {
     clearChoices();
     if (playerOneWins === 0 && playerTwoWins === 0) {
-        // $(".oneWins").text("");
-        // $(".oneLosses").text("");
-        // $(".twoWins").text("");
-        // $(".twoLosses").text("");
-        // $(".tieGame").text("");
 
     }
     // $(".logout").on("click", function (event) {
