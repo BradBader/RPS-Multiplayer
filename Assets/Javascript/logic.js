@@ -56,10 +56,28 @@ $("#send").on("click", function () {
     $("#message-input").val("");
 });
 
+function clearAll(){
+    if (connected <= 1 && curUser == null) {
+        database.ref("/1/User").set(null);
+        database.ref("/1/Wins").set(null);
+        database.ref("/1/Losses").set(null);
+        database.ref("/2/User").set(null);
+        database.ref("/2/Wins").set(null);
+        database.ref("/2/Losses").set(null);
+        database.ref("/rpsChatroom/").set(null)
+        event.preventDefault();
+        $(".message-box").text("")
+        $(".playerTwo").text("Player 2: Enter Name");
+        $("#playerTwoInfo").show();
+        $(".playerOne").text("Player 1: Enter Name");
+        $("#playerOneInfo").show();
+    }
+}
 
-
+// on chatroom update, runs these two functions.
 chatroom.on("value", gotData, errData)
 
+// processes objects properly, so that I can use the username and message info on firebase 
 function gotData(data) {
     var fullMessage = data.val()
     var keys = Object.keys(fullMessage)
@@ -72,17 +90,19 @@ function gotData(data) {
     }
 }
 
+//provides error data
 function errData(err) {
     console.log("errdata running")
 }
 
+// initial check to ensure both players have picked. calls playerturns function to update turn text, runs to vs if both players have picked.
 function preVersus() {
     playerTurns()
     if (playerOneChoice !== null && playerTwoChoice !== null) {
         versus()
     }
 }
-
+// the RPS functionality.
 function versus() {
     if (playerOneChoice == "R" && playerTwoChoice == "R") {
         $(".tieGame").text("Player One Chose " + playerOneChoice + " and Player 2 Chose " + playerTwoChoice + "! This game is a tie!")
@@ -90,19 +110,19 @@ function versus() {
         resetButtons()
         resetTurns()
     } else if (playerOneChoice == "R" && playerTwoChoice == "P") {
-        $(".tieGame").text(realPlayerOneName + " Chose " + playerOneChoice + " and " + realPlayerTwoName + " Chose " + playerTwoChoice + "! " + realPlayerTwoName + "wins!")
+        $(".tieGame").text(realPlayerOneName + " Chose " + playerOneChoice + " and " + realPlayerTwoName + " Chose " + playerTwoChoice + "! " + realPlayerTwoName + " wins!")
         dbOneLosses()
         dbTwoWins()
         clearChoices()
         resetButtons()
     } else if (playerOneChoice == "R" && playerTwoChoice == "S") {
-        $(".tieGame").text(realPlayerOneName + " Chose " + playerOneChoice + " and " + realPlayerTwoName + " Chose " + playerTwoChoice + "! " + realPlayerOneName + "wins!")
+        $(".tieGame").text(realPlayerOneName + " Chose " + playerOneChoice + " and " + realPlayerTwoName + " Chose " + playerTwoChoice + "! " + realPlayerOneName + " wins!")
         dbOneWins();
         dbTwoLosses();
         clearChoices()
         resetButtons()
     } else if (playerOneChoice == "P" && playerTwoChoice == "R") {
-        $(".tieGame").text(realPlayerOneName + " Chose " + playerOneChoice + " and " + realPlayerTwoName + " Chose " + playerTwoChoice + "! " + realPlayerOneName + "wins!")
+        $(".tieGame").text(realPlayerOneName + " Chose " + playerOneChoice + " and " + realPlayerTwoName + " Chose " + playerTwoChoice + "! " + realPlayerOneName + " wins!")
         dbOneLosses();
         dbTwoWins();
         clearChoices()
@@ -113,19 +133,19 @@ function versus() {
         resetButtons()
         resetTurns()
     } else if (playerOneChoice == "P" && playerTwoChoice == "S") {
-        $(".tieGame").text(realPlayerOneName + " Chose " + playerOneChoice + " and " + realPlayerTwoName + " Chose " + playerTwoChoice + "! " + realPlayerTwoName + "wins!")
+        $(".tieGame").text(realPlayerOneName + " Chose " + playerOneChoice + " and " + realPlayerTwoName + " Chose " + playerTwoChoice + "! " + realPlayerTwoName + " wins!")
         dbOneLosses();
         dbTwoWins();
         clearChoices()
         resetButtons()
     } else if (playerOneChoice == "S" && playerTwoChoice == "R") {
-        $(".tieGame").text(realPlayerOneName + " Chose " + playerOneChoice + " and " + realPlayerTwoName + " Chose " + playerTwoChoice + "! " + realPlayerTwoName + "wins!")
+        $(".tieGame").text(realPlayerOneName + " Chose " + playerOneChoice + " and " + realPlayerTwoName + " Chose " + playerTwoChoice + "! " + realPlayerTwoName + " wins!")
         dbOneLosses();
         dbTwoWins();
         clearChoices()
         resetButtons()
     } else if (playerOneChoice == "S" && playerTwoChoice == "P") {
-        $(".tieGame").text(realPlayerOneName + " Chose " + playerOneChoice + " and " + realPlayerTwoName + " Chose " + playerTwoChoice + "! " + realPlayerOneName + "wins!")
+        $(".tieGame").text(realPlayerOneName + " Chose " + playerOneChoice + " and " + realPlayerTwoName + " Chose " + playerTwoChoice + "! " + realPlayerOneName + " wins!")
         dbOneWins();
         dbTwoLosses();
         clearChoices()
@@ -138,6 +158,7 @@ function versus() {
     }
 }
 
+//adds a loss for player one when called
 function dbOneLosses() {
     playerOneLosses++;
     database.ref("/1/Losses").set({
@@ -145,7 +166,7 @@ function dbOneLosses() {
     })
 
 }
-
+// adds a win for player one when called
 function dbOneWins() {
     playerOneWins++;
     database.ref("/1/Wins").set({
@@ -153,7 +174,7 @@ function dbOneWins() {
     })
     resetTurns()
 }
-
+//adds a loss for player two when called
 function dbTwoLosses() {
     playerTwoLosses++;
     database.ref("/2/Losses").set({
@@ -161,7 +182,7 @@ function dbTwoLosses() {
     })
 
 }
-
+//adds a win for player two when called
 function dbTwoWins() {
     playerTwoWins++;
     database.ref("/2/Wins").set({
@@ -169,7 +190,7 @@ function dbTwoWins() {
     })
     resetTurns()
 }
-
+// sets turns to 1 again
 function resetTurns() {
     playerTurn = 1;
     database.ref("/turn").set({
@@ -229,6 +250,7 @@ function hideTwoButtons() {
     }
 }
 
+// on turn value, gets a firebase value, sets playerTurn variable to the firebase variable, runs playerTurns function to update text.
 database.ref("/turn/turn").on("value", function (snapshot) {
     realTurn = (snapshot.val());
     //the line below is intentional for testing
@@ -275,9 +297,10 @@ database.ref("/1/User/username").on("value", function (snapshot) {
     }
 })
 
+// choice on value, calls preversus
 database.ref("/1/Choice/Choice").on("value", function (snapshot) {
     playerOneChoice = (snapshot.val());
-    versus();
+    preVersus();
     hideOneButtons();
 
 });
@@ -309,7 +332,7 @@ database.ref("/2/User/username").on("value", function (snapshot) {
 
 database.ref("/2/Choice/Choice").on("value", function (snapshot) {
     playerTwoChoice = (snapshot.val());
-    versus();
+    preVersus();
     hideTwoButtons();
 
 });
@@ -393,29 +416,15 @@ connectionsRef.on("value", function (snap) {
         })
     }
     if (connected <= 1 && curUser == null) {
-        database.ref("/1/User").set({
-            username: nullPlaceHolder
-        });
-        database.ref("/1/Wins").set({
-            Wins: nullPlaceHolder
-        });
-        database.ref("/1/Losses").set({
-            Losses: nullPlaceHolder
-        });
-        database.ref("/2/User").set({
-            username: nullPlaceHolder
-        });
-        database.ref("/2/Wins").set({
-            Wins: nullPlaceHolder
-        });
-        database.ref("/2/Losses").set({
-            Losses: nullPlaceHolder
-        });
+        database.ref("/1/User").set(null);
+        database.ref("/1/Wins").set(null);
+        database.ref("/1/Losses").set(null);
+        database.ref("/2/User").set(null);
+        database.ref("/2/Wins").set(null);
+        database.ref("/2/Losses").set(null);
         database.ref("/rpsChatroom/").set(null)
         event.preventDefault();
         $(".message-box").text("")
-
-
         $(".playerTwo").text("Player 2: Enter Name");
         $("#playerTwoInfo").show();
         $(".playerOne").text("Player 1: Enter Name");
@@ -446,10 +455,8 @@ function playerTurns() {
 
 $(document).ready(function () {
     $("#playerTurns").hide()
+    clearAll();
     clearChoices();
-    if (playerOneWins === 0 && playerTwoWins === 0) {
-
-    }
     $("#playerOneSubmit").on("click", function (event) {
         event.preventDefault();
         playerOneActive = true;
